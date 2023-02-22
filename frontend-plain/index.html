@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+
+    
+        
+    
+    <!-- <script src="js/elastic-apm-rum.umd.min.js" ></script> -->
+
+    <!-- <link rel="icon" href="image/favicon.ico"> -->
+    <link rel="stylesheet" href="css/bootstrap.css">
+
+    <script src="js/jquery-3.6.0.min.js" ></script>
+    <script src="js/bootstrap.min.js" ></script>
+
+    <title>Sample Environment</title>
+
+</head>
+
+<body>
+    <div class="container">
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+            <a class="navbar-brand" href="/">Home</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+                aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav mr-auto">
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle disabled" href="#" id="navbarDropdown" role="button"
+                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            항공편
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <a class="dropdown-item" href="/flight-list">항공편 목록</a>
+                            <a class="dropdown-item" href="/flight-create">항공편 등록</a>
+                        </div>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            승객
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <a class="dropdown-item" href="/passenger-list.html">승객 목록</a>
+                            <a class="dropdown-item" href="/passenger-create.html">승객 등록</a>
+                        </div>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle disabled" href="#" id="navbarDropdown" role="button"
+                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            공항
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <a class="dropdown-item" href="/airport-list">공항 목록</a>
+                            <a class="dropdown-item" href="/airport-create">공항 등록</a>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+            <img class="mr-sm-2" src="image/long-pic.png" alt="Testing image" width="272" height="46">
+        </nav>
+    </div>
+
+    <button class="btn btn-warning" id="make_error" name="make_error">JS error</button>
+    <button class="btn btn-danger" id="make_400" name="make_400">400에러</button>
+    <button class="btn btn-primary" id="health_flask" name="health_flask">Flask Service Health</button>
+    <button class="btn btn-success" id="health_spring" name="health_spring">Spring Service Health</button>
+    <button class="btn btn-danger" id="make_spring_npe" name="make_spring_npe">Make NPE</button>
+</body>
+
+<script>
+    const delay = ms => new Promise(res => setTimeout(res, ms));
+
+    // elasticApm.init({
+    //   serviceName: 'frontend-plain',
+    //   serverUrl: 'https://7982e33051ef4284b11cba764a863ad3.apm.us-central1.gcp.cloud.es.io:443',
+    //   environment: 'production',
+    // })
+
+    $( "#make_error" ).click(function() {
+        var test = undefined;
+        var letsmake_error = test.not_exsisting_variable[0];
+    });
+
+    $( "#make_400" ).click(async function() {
+        console.log("슬립 시작!");
+        await delay(3000);
+        console.log("슬립 끝!");
+
+        // 404 반환
+        jQuery.ajax({
+            url: "/flask/non_existing_url",
+            method: 'get',
+            data: {
+            },
+            success: function(result) {
+                console.log(result);
+            },
+            error:function(request,status,error) {
+                console.log("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+            }
+        });
+    });
+
+    $( "#health_flask" ).click(async function() {
+        jQuery.ajax({
+            url: "/flask/health",
+            method: 'get',
+            data: {
+            },
+            success: function(result) {
+                console.log(result);
+                alert("Flask backend service is healthy!");
+            },
+            error:function(request,status,error) {
+                console.log("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+            }
+        });
+    });
+
+    $( "#health_spring" ).click(async function() {
+        jQuery.ajax({
+            url: "/spring/health",
+            method: 'get',
+            data: {
+            },
+            success: function(result) {
+                console.log(result);
+                alert("Spring backend service is healthy!");
+            },
+            error:function(request,status,error) {
+                console.log("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+            }
+        });
+    });
+
+    $( "#make_spring_npe" ).click(async function() {
+        jQuery.ajax({
+            url: "/spring/health/error",
+            method: 'get',
+            data: {
+            },
+            success: function(result) {
+                console.log(result);
+            },
+            error:function(request,status,error) {
+                console.log("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+            }
+        });
+    });
+</script>
+
+</html>

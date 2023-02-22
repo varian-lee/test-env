@@ -1,0 +1,61 @@
+spring:
+  profiles: 
+    group: 
+      "local": "common,local"
+      "docker": "common,docker"
+      "prod": "common,prod"
+---
+spring:
+  config:
+    activate:
+      on-profile: "common"
+  elasticsearch:
+    #host: choco-cf079a.es.ap-northeast-2.aws.elastic-cloud.com
+    #port: 9243
+    host: lab3.kihyun.me
+    port: 9200
+    # elastic:qK8WHFm90ihubANLdCRMqbMs
+    
+management:
+  endpoints:
+    jmx:
+      domain: "me.kihyun.flights"
+    enabled-by-default: true
+    web:
+      exposure:
+        include: "jolokia"
+  endpoint:
+    jolokia:
+      enabled: true
+      config:
+        debug: true
+---
+spring:
+  config:
+    activate:
+      on-profile: "local"
+  redis:
+    host: 34.64.134.113
+    port: 6379
+
+---
+spring:
+  config:
+    activate:
+      on-profile: "prod"
+  redis:
+    host: 172.31.28.103
+    port: 6379
+  application:
+    name: "flight-application"
+
+logging.file.name: /var/log/tomcat9/flight-application.log
+
+---
+spring:
+  config:
+    activate:
+      on-profile: "docker"
+  redis:
+    host: redis
+    port: 6379

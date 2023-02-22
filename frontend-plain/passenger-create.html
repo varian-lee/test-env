@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <!-- <link rel="icon" href="image/favicon.ico"> -->
+    <link rel="stylesheet" href="css/bootstrap.css">
+
+    <script src="js/jquery-3.6.0.min.js" ></script>
+    <script src="js/bootstrap.min.js" ></script>
+    <!-- <script src="js/elastic-apm-rum.umd.min.js" ></script> -->
+
+    <title>Sample Environment</title>
+
+</head>
+
+<body>
+    <div class="container">
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+            <a class="navbar-brand" href="/">Home</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+                aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav mr-auto">
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle disabled" href="#" id="navbarDropdown" role="button"
+                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            항공편
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <a class="dropdown-item" href="/flight-list">항공편 목록</a>
+                            <a class="dropdown-item" href="/flight-create">항공편 등록</a>
+                        </div>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            승객
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <a class="dropdown-item" href="/passenger-list.html">승객 목록</a>
+                            <a class="dropdown-item" href="/passenger-create.html">승객 등록</a>
+                        </div>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle disabled" href="#" id="navbarDropdown" role="button"
+                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            공항
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <a class="dropdown-item" href="/airport-list">공항 목록</a>
+                            <a class="dropdown-item" href="/airport-create">공항 등록</a>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+            <img class="mr-sm-2" src="image/long-pic.png" alt="Testing image" width="272" height="46">
+        </nav>
+    </div>
+
+    <div class="container">
+        <div class="passenger-create">
+            <h1> 승객 등록 </h1>
+        </div>
+
+        <div id="hidden_div" hidden></div>
+
+        <form id="app">
+            <div class="form-group row">
+                <label for="name" class="col-sm-2 col-form-label">이름 </label>
+                <div class="col-sm-10">
+                    <input
+                        id="name"
+                        type="text"
+                        name="name"
+                        class="form-control">
+                </div>
+            </div>
+    
+            <div class="form-group row">
+                <label for="nationality" class="col-sm-2 col-form-label">국적 </label>
+                <div class="col-sm-10">
+                    <input
+                        id="nationality"
+                        type="text"
+                        name="nationality"
+                        class="form-control">
+                </div>
+            </div>
+    
+            <div class="form-group row">
+                <label for="birthdate" class="col-sm-2 col-form-label">생년월일 </label>
+                <div class="col-sm-10">
+                    <input
+                        id="birthdate"
+                        type="date"
+                        name="birthdate"
+                        class="form-control">
+                </div>
+            </div>
+    
+            <div class="form-group row">
+                <div class="col-sm-11"></div>
+                <button class="btn btn-primary col-sm-1" type="button" onclick="create_passenger()">
+                    Create
+                </button>
+            </div>
+        </form>
+    </div>
+</body>
+
+<script>
+    // elasticApm.init({
+    //   serviceName: 'frontend-plain',
+    //   serverUrl: 'https://7982e33051ef4284b11cba764a863ad3.apm.us-central1.gcp.cloud.es.io:443',
+    //   environment: 'production',
+    // })
+    function create_passenger() {
+        var name = $("#name").val();
+        var nationality = $("#nationality").val();
+        var birthdate = $("#birthdate").val();
+
+        if (name && birthdate && nationality) {
+            var passengerData = {
+                name: name,
+                birthdate: birthdate,
+                nationality: nationality,
+            }
+
+            jQuery.ajax({
+                url: "/flask/passenger" ,
+                method: 'POST',
+                contentType : 'application/json; charset=utf-8',
+                data: JSON.stringify(passengerData),
+                success: function(result) {
+                    console.log(result);
+                    
+                    location.href='/passenger-list.html'
+                }
+            });
+            return true;
+        } else {
+            if (!name) {
+                window.alert('Name required.');
+            }
+            if (!birthdate) {
+                window.alert('birthdate required.');
+            }
+            if (!nationality) {
+                window.alert('nationality required.');
+            }
+        }
+    }
+</script>
+
+</html>

@@ -1,0 +1,72 @@
+version: '3.4'
+
+services:
+  mariadb:
+    image: mariadb:10.5.8
+    cap_add:
+      - SYS_NICE
+    restart: always
+    environment:
+      - MYSQL_DATABASE=sampledb
+      - MYSQL_ROOT_PASSWORD=mauFJcuf5dhRMQrjj
+    ports:
+      - '3306:3306'
+    volumes:
+      - ./mariadb/initdb.d:/docker-entrypoint-initdb.d
+
+  backend-flask:
+    image: flask
+    links: 
+      - mariadb
+      - redis
+    depends_on:
+      - mariadb
+    environment:
+      - MARIADB_HOST=mariadb
+      - MARIADB_USER=root
+      - MARIADB_PASS=mauFJcuf5dhRMQrjj
+      - MARIADB_DB=sampledb
+    volumes:
+      - ./elastic_tmp:/elastic_tmp
+    build:
+      context: ./backend-flask
+      dockerfile: ./Dockerfile-Flask
+    ports:
+      - 8081:8081
+  
+  redis:
+    image: redis:alpine
+    command: redis-server --port 6379
+    labels:
+      - "name=redis"
+      - "mode=standalone"
+    ports:
+      - 6379:6379
+
+  backend-spring:
+    image: tomcat:8.5.78-jdk17-temurin
+    volumes:
+      - ./backend-spring/build/libs/:/usr/local/tomcat/webapps/
+    ports:
+      - 8080:8080
+    environment:
+      - "SPRING_PROFILES_ACTIVE=docker"
+    command:
+      - catalina.sh
+      - run
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: ./Dockerfile-Vue
+    links: 
+      - backend-spring
+      - backend-flask
+    ports:
+      - 80:80
+    volumes: 
+        - ./frontend/:/app    
+    
+volumes:
+  mariadb:
+    driver: local

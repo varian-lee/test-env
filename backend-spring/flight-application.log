@@ -1,0 +1,23 @@
+2022-04-11 13:21:45.064  INFO 72860 [restartedMain] me.kihyun.flights.FlightsApplication : Starting FlightsApplication using Java 17.0.2 on igihyeon-ui-MacBookPro.local with PID 72860 (/Users/varian/kihyun-flights/flights/bin/main started by varian in /Users/varian/kihyun-flights/flights)
+2022-04-11 13:21:45.064  INFO 72860 [restartedMain] me.kihyun.flights.FlightsApplication : The following 2 profiles are active: "local", "common"
+2022-04-11 13:21:45.089  INFO 72860 [restartedMain] o.s.b.d.e.DevToolsPropertyDefaultsPostProcessor : Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
+2022-04-11 13:21:45.089  INFO 72860 [restartedMain] o.s.b.d.e.DevToolsPropertyDefaultsPostProcessor : For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
+2022-04-11 13:21:45.336  INFO 72860 [restartedMain] o.s.d.r.c.RepositoryConfigurationDelegate : Multiple Spring Data modules found, entering strict repository configuration mode!
+2022-04-11 13:21:45.337  INFO 72860 [restartedMain] o.s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data Elasticsearch repositories in DEFAULT mode.
+2022-04-11 13:21:45.343  INFO 72860 [restartedMain] o.s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 3 ms. Found 0 Elasticsearch repository interfaces.
+2022-04-11 13:21:45.345  INFO 72860 [restartedMain] o.s.d.r.c.RepositoryConfigurationDelegate : Multiple Spring Data modules found, entering strict repository configuration mode!
+2022-04-11 13:21:45.346  INFO 72860 [restartedMain] o.s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data Reactive Elasticsearch repositories in DEFAULT mode.
+2022-04-11 13:21:45.347  INFO 72860 [restartedMain] o.s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 1 ms. Found 0 Reactive Elasticsearch repository interfaces.
+2022-04-11 13:21:45.354  INFO 72860 [restartedMain] o.s.d.r.c.RepositoryConfigurationDelegate : Multiple Spring Data modules found, entering strict repository configuration mode!
+2022-04-11 13:21:45.355  INFO 72860 [restartedMain] o.s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+2022-04-11 13:21:45.360  INFO 72860 [restartedMain] o.s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 0 ms. Found 0 Redis repository interfaces.
+2022-04-11 13:21:45.606  INFO 72860 [restartedMain] o.s.b.w.e.tomcat.TomcatWebServer : Tomcat initialized with port(s): 8080 (http)
+2022-04-11 13:21:45.612  INFO 72860 [restartedMain] o.a.coyote.http11.Http11NioProtocol : Initializing ProtocolHandler ["http-nio-8080"]
+2022-04-11 13:21:45.613  INFO 72860 [restartedMain] o.a.catalina.core.StandardService : Starting service [Tomcat]
+2022-04-11 13:21:45.613  INFO 72860 [restartedMain] o.a.catalina.core.StandardEngine : Starting Servlet engine: [Apache Tomcat/9.0.60]
+2022-04-11 13:21:45.647  INFO 72860 [restartedMain] o.a.c.c.C.[Tomcat].[localhost].[/] : Initializing Spring embedded WebApplicationContext
+2022-04-11 13:21:45.647  INFO 72860 [restartedMain] o.s.b.w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 558 ms
+2022-04-11 13:21:46.178  INFO 72860 [restartedMain] o.s.b.d.a.OptionalLiveReloadServer : LiveReload server is running on port 35729
+2022-04-11 13:21:46.185  INFO 72860 [restartedMain] o.a.coyote.http11.Http11NioProtocol : Starting ProtocolHandler ["http-nio-8080"]
+2022-04-11 13:21:46.191  INFO 72860 [restartedMain] o.s.b.w.e.tomcat.TomcatWebServer : Tomcat started on port(s): 8080 (http) with context path ''
+2022-04-11 13:21:46.199  INFO 72860 [restartedMain] me.kihyun.flights.FlightsApplication : Started FlightsApplication in 1.374 seconds (JVM running for 1.67)
